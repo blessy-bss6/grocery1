@@ -11,7 +11,6 @@ class SelProdRespo {
     print(response);
 
     if (response['success'] == 1) {
-    
       return response;
     } else {
       // print(response);
@@ -27,7 +26,6 @@ class SelProdRespo {
     // print(response['data']);
 
     if (response['success'] == 1) {
-    
       // for (var i in response['data']) {
       //   print(i);
       // }
@@ -37,11 +35,12 @@ class SelProdRespo {
       return response;
     }
   }
-
-  Future<dynamic> selProdUpdateResp({String? id, int? quantity}) async {
+  
+  // 1 Update Product Screen 
+  Future<dynamic> selProdUpdateResp({FormData? product}) async {
     final response = await putDioRequest(
       URLConstants.selProdUrl,
-      {"id": id, "quantity": quantity},
+      product,
     );
     // print(response);
     if (response['success'] == 1) {

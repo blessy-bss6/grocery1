@@ -51,7 +51,11 @@ class SelProductBloc extends Bloc<SelProductEvent, SelProductState> {
 
       if (user['success'] == 1) {
         emit(SelProdSuccessState());
-        navigationPush(event.context, SellerNavigationBar(currentTab: 2,));
+        navigationPush(
+            event.context,
+            SellerNavigationBar(
+              currentTab: 2,
+            ));
         snackBar(event.context, user['msg'] ?? '');
       }
       emit(SelProdInitialState());
@@ -70,8 +74,7 @@ class SelProductBloc extends Bloc<SelProductEvent, SelProductState> {
     emit(SelProdLoadingState());
     try {
       var user = await prodResp.selProdUpdateResp(
-        id: event.id,
-        quantity: event.quantity,
+        product: event.prodEditModel,
       );
       // print('user data $user');
       if (user['success'] == 1) {
@@ -134,10 +137,9 @@ class SelProdAddEvent extends SelProductEvent {
 
 //  selProd Item Event
 class SelProdPutEvent extends SelProductEvent {
-  final String? id;
-  final int? quantity;
+  FormData? prodEditModel;
   final dynamic context;
-  SelProdPutEvent({required this.id, required this.quantity, this.context});
+  SelProdPutEvent({required this.prodEditModel, this.context});
   @override
   List<Object> get props => [];
 }
