@@ -1,15 +1,11 @@
-import 'package:dio/dio.dart';
-import 'package:groce1/Backend/Resp/reg_login_resp.dart';
-import 'package:groce1/utils/common.dart';
 
-import '../../utils/shared_preferences.dart';
-import '/utils/app_constants.dart';
+import '../../utils/app_constants.dart';
 import '/utils/http_services.dart';
 
-class WishListRespo {
-  Future<dynamic> wishListResp() async {
+class OrderRespo {
+  Future<dynamic> orderResp() async {
     final response = await getDioRequest(
-      URLConstants.wishListUrl,
+      URLConstants.orderUrl,
     );
     print(response);
 
@@ -21,10 +17,10 @@ class WishListRespo {
     }
   }
 
-  Future<dynamic> wishListAddResp({
+  Future<dynamic> orderAddResp({
     String? product,
   }) async {
-    final response = await postDioRequest(URLConstants.wishListUrl, data: {
+    final response = await postDioRequest(URLConstants.orderUrl, data: {
       "product": product,
     });
     print(product);
@@ -38,9 +34,9 @@ class WishListRespo {
     }
   }
 
-  // Future<dynamic> wishListUpdateResp({String? id, int? quantity}) async {
+  // Future<dynamic> OrderUpdateResp({String? id, int? quantity}) async {
   //   final response = await putDioRequest(
-  //     URLConstants.wishListUrl,
+  //     URLConstants.OrderUrl,
   //     {"id": id, "quantity": quantity},
   //   );
   //   // print(response);
@@ -52,9 +48,9 @@ class WishListRespo {
   //   }
   // }
 
-  Future<dynamic> wishListDeleteResp({String? id, dynamic context}) async {
+  Future<dynamic> orderDeleteResp({String? id, dynamic context}) async {
     final response = await delDioRequest(
-      URLConstants.wishListUrl,
+      URLConstants.orderUrl,
       {
         "id": id,
       },

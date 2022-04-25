@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:groce1/Backend/Bloc/prod_home_Bloc.dart';
 import '../Backend/Bloc/cart_Bloc.dart';
+import '../Backend/Bloc/wishlist_Bloc.dart';
 import '../Elements/baseAppbar.dart';
 import '../Screen/prodDetails.dart';
 import '../Screen/wishlistScr.dart';
@@ -159,42 +160,12 @@ class CheckProd1 extends StatefulWidget {
 }
 
 class _CheckProd1State extends State<CheckProd1> {
-  // dynamic chWid = false;
-  // dynamic data = false;
-  // chnageCallBack(dynamic clBtn) {
-  //   setState(() {
-  //     data = clBtn;
-  //   });
-  //   // print('OutSide $clBtn');
-  // }
-
-  // dynamic price;
-  // dynamic quantity;
-  // dynamic fullPrice;
-
-  // plusCallBack(dynamic cartItem) {
-  //   setState(() {
-  //     price = cartItem * 150;
-  //     quantity = cartItem;
-  //     fullPrice = cartItem * 300;
-  //     // print(' plus $cartItem');
-  //   });
-  // }
-
-  // minusCallBack(dynamic cartItem) {
-  //   setState(() {
-  //     // print('minus $cartItem');
-  //     price = cartItem * 150;
-  //     quantity = cartItem;
-  //     fullPrice = cartItem * 300;
-  //   });
-  // }
+  
 
   @override
   Widget build(BuildContext context) {
-    // print("runtipme type ${widget.cartData.runtimeType}");
-    print('${widget.cartData}');
-    // print(widget.prodNum);
+
+
     return Container(
       margin: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
@@ -219,7 +190,13 @@ class _CheckProd1State extends State<CheckProd1> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () { 
+                     BlocProvider.of<WishListBloc>(context, listen: false)
+                        .add(WishListItemAddEvent(
+                      prodNumber: '${widget.prodNum['id']}',
+                      context: context,
+                    ));
+                  },
                   child: ImgIcon(
                     src: 'assets/icons/like-icon.png',
                     width: 15,
@@ -227,13 +204,7 @@ class _CheckProd1State extends State<CheckProd1> {
                   ),
                 ),
                 heightSizedBox(20.0),
-                // CheckProd2(
-                //   i: widget.prodNum,
-                //   chnageCallBack: chnageCallBack,
-                //   data: data,
-                //   plusCallBack: plusCallBack,
-                //   minusCallBack: minusCallBack,
-                // )
+               
 
                 InkWell(
                     onTap: ()  {

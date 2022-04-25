@@ -62,11 +62,11 @@ class _UserNavigationBarState extends State<UserNavigationBar> {
           widget.currentPage = ProfileScreen();
           // widget.currentPage = SelGeneratePromoCodes(sellerId: widget.sellerId);
           break;
-        case 5:
-          widget.currentPage = AuthOptionScr(
-            seller: true,
-          );
-          break;
+        // case 5:
+        //   widget.currentPage = AuthOptionScr(
+        //     seller: true,
+        //   );
+          // break;
       }
     });
   }
@@ -145,14 +145,14 @@ class _UserNavigationBarState extends State<UserNavigationBar> {
             // ),
             label: 'Profile',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.sell_sharp,
-              size: 22,
-              color: widget.currentTab == 5 ? offgreenColor : Colors.black38,
-            ),
-            label: 'Seller',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(
+          //     Icons.sell_sharp,
+          //     size: 22,
+          //     color: widget.currentTab == 5 ? offgreenColor : Colors.black38,
+          //   ),
+          //   label: 'Seller',
+          // ),
         ],
       ),
     );

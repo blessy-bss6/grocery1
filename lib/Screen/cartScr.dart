@@ -42,7 +42,7 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       body: BlocConsumer<CartBloc, CartState>(listener: (context, state) {
         if (state is CartSuccessState) {
-          print(state);
+      
           if (state.data['data'].length > 0) {
             setState(() {
               bottmBtn = true;

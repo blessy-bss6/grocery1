@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:groce1/Screen/dashBoard.dart';
+import 'package:groce1/utils/common.dart';
 
 import '../Resp/wishList_Resp.dart';
 
@@ -7,40 +9,52 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
   WishListRespo prodResp = WishListRespo();
 
   WishListBloc() : super(WishListInitialState()) {
-    on<FetchWishListEvent>(_wishlistMethod);
+    on<FetchWishListEvent>(_wishListMethod);
 
-    on<WishListItemAddEvent>(_wishlistAddMethod);
+    // ====================ADD==========================
+    on<WishListItemAddEvent>(_wishListAddMethod);
 
-    on<WishlistItemPutEvent>(_wishlistUpdateMethod);
+    // ! Update WishList and Wishlist
+    // on<WishListItemPutEvent>(_wishListUpdateMethod);
 
-    on<WishlistItemDelEvent>(_wishlistDeleteMethod);
+    // ! Delete WishList and Wishlist
+    on<WishListItemDelEvent>(_wishListDeleteMethod);
   }
 
-  void _wishlistMethod(FetchWishListEvent event, Emitter emit) async {
+  //  ! WishList Data Get
+
+  void _wishListMethod(FetchWishListEvent event, Emitter emit) async {
     // print(event);
     emit(WishListLoadingState());
     try {
-      var user = await prodResp.wishlistResp();
+      dynamic user = await prodResp.wishListResp();
       // print('user data $user');
       if (user['success'] == 1) {
-        emit(WishListSuccessState());
+        emit(WishListSuccessState(
+            data: user['data'], pricedata: user['priceData']));
       }
-      emit(WishListInitialState());
+      // emit(WishListInitialState());
     } catch (e) {
       emit(WishListFailedState());
     }
   }
 
-  _wishlistAddMethod(WishListItemAddEvent event, Emitter emit) async {
+  //  ============ WishList AND WISHLIST PRODUCT ADD ======================
+  _wishListAddMethod(WishListItemAddEvent event, Emitter emit) async {
     // print(event);
     emit(WishListLoadingState());
     try {
-      var user = await prodResp.wishlistAddResp();
+      var user = await prodResp.wishListAddResp(
+        product: event.prodNumber,
+      );
       // print('user data $user');
       if (user['success'] == 1) {
         emit(WishListSuccessState());
+        snackBar(event.context, user['msg'] ?? '');
+      } else {
+        snackBar(event.context, user['msg'] ?? '');
+        emit(WishListInitialState());
       }
-      emit(WishListInitialState());
     } catch (e) {
       emit(WishListFailedState());
     }
@@ -48,37 +62,49 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
 
   // !  ==============  END ADD METHOD ===============================
 
-  void _wishlistUpdateMethod(WishlistItemPutEvent event, Emitter emit) async {
-    // print(event);
-    emit(WishListLoadingState());
-    try {
-      var user = await prodResp.wishlistUpdateResp();
-      // print('user data $user');
-      if (user['success'] == 1) {
-        emit(WishListSuccessState());
-      }
-      emit(WishListInitialState());
-    } catch (e) {
-      emit(WishListFailedState());
-    }
-  }
+  // ! Update WishList and WishlIst Item
+  // void _wishListUpdateMethod(WishListItemPutEvent event, Emitter emit) async {
+  //   print(event);
+  //   emit(WishListLoadingState());
+  //   try {
+  //     var user = await prodResp.WishListUpdateResp(
+  //       id: event.id,
+  //       quantity: event.quantity,
+  //     );
+  //     // print('user data $user');
+  //     if (user['success'] == 1) {
+  //       emit(WishListSuccessState(data: user));
+  //     }
+  //     // emit(WishListWishInitialState());
+  //   } catch (e) {
+  //     emit(WishListFailedState());
+  //   }
+  // }
 
-  void _wishlistDeleteMethod(WishlistItemDelEvent event, Emitter emit) async {
+  // ! Delete for WishList AND WISHLIST
+  _wishListDeleteMethod(WishListItemDelEvent event, Emitter emit) async {
     // print(event);
     emit(WishListLoadingState());
     try {
-      var user = await prodResp.wishlistDeleteResp();
+      var user = await prodResp.wishListDeleteResp(id: event.id,context: event.context);
       // print('user data $user');
       if (user['success'] == 1) {
-        emit(WishListSuccessState());
+        
+        emit(WishListSuccessState(data: user['data']));
+          // snackBar(event.context, user['msg'] ?? '');
+      } 
+      else {
+        // snackBar(event.context, user['msg'] ??'');
+        emit(WishListInitialState());
       }
     } catch (e) {
+      print(e.toString());
       emit(WishListFailedState());
     }
   }
 }
 
-// ! Event for Cart and WishList
+// ! Event for WishList and WishList
 abstract class WishListEvent extends Equatable {
   WishListEvent();
 
@@ -86,39 +112,44 @@ abstract class WishListEvent extends Equatable {
   List<Object> get props => [];
 }
 
+// ! FIRST EVENT FOR FETCHING / INITIALIZE THE EVENT
 class FetchWishListEvent extends WishListEvent {
-  FetchWishListEvent();
+  final dynamic homeData;
+  FetchWishListEvent({this.homeData});
   @override
   List<Object> get props => [];
 }
 
+// 1 WishList Item Add and Wishlist add
 class WishListItemAddEvent extends WishListEvent {
   final String? prodNumber;
   final dynamic context;
+
   WishListItemAddEvent({required this.prodNumber, this.context});
   @override
   List<Object> get props => [];
 }
 
-class WishlistItemPutEvent extends WishListEvent {
+//  WishList Item Event
+class WishListItemPutEvent extends WishListEvent {
   final String? id;
   final int? quantity;
   final dynamic context;
-  WishlistItemPutEvent(
+  WishListItemPutEvent(
       {required this.id, required this.quantity, this.context});
   @override
   List<Object> get props => [];
 }
 
-class WishlistItemDelEvent extends WishListEvent {
+class WishListItemDelEvent extends WishListEvent {
   final String? id;
   final dynamic context;
-  WishlistItemDelEvent({this.id, this.context});
+  WishListItemDelEvent({required this.id, this.context});
   @override
   List<Object> get props => [];
 }
 
-// / ! State in Prod Home
+// / ! State in WishList
 abstract class WishListState extends Equatable {
   const WishListState();
 
@@ -130,9 +161,12 @@ class WishListInitialState extends WishListState {}
 
 class WishListLoadingState extends WishListState {}
 
+class WishListDeleteState extends WishListState {}
+
 class WishListSuccessState extends WishListState {
   final dynamic data;
-  WishListSuccessState({this.data});
+  final dynamic pricedata;
+  WishListSuccessState({this.data, this.pricedata});
 }
 
 class WishListFailedState extends WishListState {

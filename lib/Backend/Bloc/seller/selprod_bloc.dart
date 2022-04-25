@@ -95,7 +95,7 @@ class SelProductBloc extends Bloc<SelProductEvent, SelProductState> {
       // print('user data $user');
       if (user['success'] == 1) {
         // snackBar(event.context, user['msg']);
-        emit(SelProdSuccessState(data: user));
+        emit(SelProdSuccessState(data: user['data']));
       } else {
         emit(SelProdInitialState());
       }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../Backend/Bloc/order_Bloc.dart';
 import '../Elements/baseAppbar.dart';
 import '../Screen/orderCompleteScr.dart';
 import '../common/button.dart';
@@ -19,10 +21,17 @@ class OrderDeatilsScreen extends StatelessWidget {
         centerTitle: true,
         title: 'Order Deatils',
       ),
-      body: ListView(
-        shrinkWrap: true,
-        children: [OrderDetailTop(), OrderDetProd(), PriceList()],
-      ),
+      body: BlocConsumer<OrderBloc, OrderState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            return ListView(
+              shrinkWrap: true,
+              children: [
+                OrderDetailTop(), OrderDetProd(),
+                //  PriceList()
+              ],
+            );
+          }),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20),
         child: Btn(

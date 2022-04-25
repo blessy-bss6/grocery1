@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:groce1/Backend/Bloc/seller/selprod_bloc.dart';
+import 'package:groce1/Screen/dashBoard.dart';
 import '../Elements/baseAppbar.dart';
 import '../common/button.dart';
 import '../common/formfield.dart';
@@ -10,36 +11,54 @@ import '../scrpart/imgslider.dart';
 import '../utils/common.dart';
 import '../utils/style.dart';
 
-class SelProdEditScreen extends StatelessWidget {
-  SelProdEditScreen({Key? key}) : super(key: key);
+class SelProdEditScreen extends StatefulWidget {
+  final dynamic prodNumber;
+  SelProdEditScreen({Key? key, this.prodNumber}) : super(key: key);
 
+  @override
+  State<SelProdEditScreen> createState() => _SelProdEditScreenState();
+}
+
+class _SelProdEditScreenState extends State<SelProdEditScreen> {
   final TextEditingController prodNameController = TextEditingController();
+
   final TextEditingController quantityController = TextEditingController();
+
   final TextEditingController mrpPriceController = TextEditingController();
+
   final TextEditingController offerPriceController = TextEditingController();
+
   final TextEditingController descriptionController = TextEditingController();
 
   dynamic img1;
+
   dynamic img2;
+
   dynamic img3;
+
   dynamic img4;
 
   // ! check imgSrc
   dynamic imgSrc1;
+
   dynamic imgSrc2;
+
   dynamic imgSrc3;
+
   dynamic imgSrc4;
+
   final _form = GlobalKey<FormState>();
 
-  // List helpVal = ['1', '2', '3', '4'];
-  // List prodList = [
-  //   'assets/images/pulse.png',
-  //   'assets/images/onion.png',
-  //   // 'assets/images/snacks.png',
-  //   'assets/images/potato.png',
-  //   'assets/images/pulse.png',
-  //   'assets/images/watermelon.png',
-  // ];
+  @override
+  void initState() {
+    super.initState();
+
+    prodNameController.text = widget.prodNumber['title'];
+    quantityController.text = widget.prodNumber['stock'].toString();
+    mrpPriceController.text = widget.prodNumber['salesPrice'].toString();
+    offerPriceController.text = widget.prodNumber['discountPrice'].toString();
+    descriptionController.text = widget.prodNumber['description'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +72,7 @@ class SelProdEditScreen extends StatelessWidget {
       // ! new
 
       FormData prodItemM = new FormData.fromMap({
+        "id": widget.prodNumber['id'],
         "title": prodNameController.text,
         "description": descriptionController.text,
         "salesPrice": mrpPriceController.text,
@@ -65,7 +85,7 @@ class SelProdEditScreen extends StatelessWidget {
       });
       var isregis =
           await BlocProvider.of<SelProductBloc>(context, listen: false)
-            ..add(SelProdAddEvent(prodItemModel: prodItemM, context: context));
+            ..add(SelProdPutEvent(prodEditModel: prodItemM, context: context));
     }
 
     // ! Method
@@ -75,95 +95,101 @@ class SelProdEditScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: BlocConsumer<SelProductBloc, SelProductState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-              child: Form(
-                key: _form,
-                child: ListView(
-                  children: [
-                    EditTextField(
-                      textAlign: TextAlign.left,
-                      txtColor: txtBlackColor,
-                      headTxt: 'Product Name',
-                      // fillColor: borderColor,
-                      hintText: 'Enter product name',
-                      controller: prodNameController,
-                      vertical: 15,
-                      validator: validateField,
-                    ),
-                    heightSizedBox(10.0),
-                    EditTextField(
-                      textAlign: TextAlign.left,
-                      txtColor: txtBlackColor,
-                      headTxt: 'Stock or Quantity',
-                      // fillColor: borderColor,
-                      hintText: 'Enter Product  Stock or  Quantity ',
-                      controller: quantityController,
-                      vertical: 15, validator: validateField,
-                    ),
-
-                    // Container(
-                    //   child: DropDownBtn(
-                    //     vertical: 12,
-                    //     labelText: 'Select Quantity',
-                    //     listData: helpVal,
-                    //     // fillColor: borderColor,
-                    //     pageName: 'Select Quantity',
-                    //     listController: QuantityController,
-                    //   ),
-                    // ),
-                    heightSizedBox(10.0),
-                    EditTextField(
-                      vertical: 15,
-                      textAlign: TextAlign.left,
-                      txtColor: txtBlackColor,
-                      headTxt: 'MRP',
-                      // fillColor: borderColor,
-                      hintText: 'Enter MRP Price',
-                      controller: mrpPriceController,
-                      validator: validateField,
-                    ),
-                    heightSizedBox(10.0),
-                    EditTextField(
-                      vertical: 15,
-                      textAlign: TextAlign.left,
-                      txtColor: txtBlackColor,
-                      headTxt: 'Offer Price',
-                      // fillColor: borderColor,
-                      hintText: 'Enter Offer Price',
-                      controller: offerPriceController,
-                      validator: validateField,
-                    ),
-                    heightSizedBox(10.0),
-                    Text(
-                      'Upload Photo',
-                      style: labelTextStyle,
-                    ),
-                    // UpdImgFile(
-                    //   imgSrc1: 'assets/images/pulse.png',
-                    //   imgSrc2: 'assets/images/onion.png',
-                    //   imgSrc3: 'assets/images/potato.png',
-                    // ),
-                    heightSizedBox(10.0),
-                    EditTextField(
-                      // hoverColor: borderColor,
-                      textAlign: TextAlign.left,
-                      txtColor: txtBlackColor,
-                      headTxt: 'Write Description',
-                      // fillColor: borderColor,
-                      hintText: 'Enter Description',
-                      maxLines: 5,
-                      controller: descriptionController,
-                      validator: validateField,
-                    )
-                  ],
+          listener: (context, state) {
+        if (state is SelProdSuccessState) {
+          navigationPush(
+              context,
+              SellerNavigationBar(
+                currentTab: 2,
+              ));
+        }
+      }, builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+          child: Form(
+            key: _form,
+            child: ListView(
+              children: [
+                EditTextField(
+                  textAlign: TextAlign.left,
+                  txtColor: txtBlackColor,
+                  headTxt: 'Product Name',
+                  // fillColor: borderColor,
+                  hintText: 'Enter product name',
+                  controller: prodNameController,
+                  vertical: 15,
+                  validator: validateField,
                 ),
-              ),
-            );
-          }),
+                heightSizedBox(10.0),
+                EditTextField(
+                  textAlign: TextAlign.left,
+                  txtColor: txtBlackColor,
+                  headTxt: 'Stock or Quantity',
+                  // fillColor: borderColor,
+                  hintText: 'Enter Product  Stock or  Quantity ',
+                  controller: quantityController,
+                  vertical: 15, validator: validateField,
+                ),
+
+                // Container(
+                //   child: DropDownBtn(
+                //     vertical: 12,
+                //     labelText: 'Select Quantity',
+                //     listData: helpVal,
+                //     // fillColor: borderColor,
+                //     pageName: 'Select Quantity',
+                //     listController: QuantityController,
+                //   ),
+                // ),
+                heightSizedBox(10.0),
+                EditTextField(
+                  vertical: 15,
+                  textAlign: TextAlign.left,
+                  txtColor: txtBlackColor,
+                  headTxt: 'MRP',
+                  // fillColor: borderColor,
+                  hintText: 'Enter MRP Price',
+                  controller: mrpPriceController,
+                  validator: validateField,
+                ),
+                heightSizedBox(10.0),
+                EditTextField(
+                  vertical: 15,
+                  textAlign: TextAlign.left,
+                  txtColor: txtBlackColor,
+                  headTxt: 'Offer Price',
+                  // fillColor: borderColor,
+                  hintText: 'Enter Offer Price',
+                  controller: offerPriceController,
+                  validator: validateField,
+                ),
+                heightSizedBox(10.0),
+                Text(
+                  'Upload Photo',
+                  style: labelTextStyle,
+                ),
+                // UpdImgFile(
+                //   imgSrc1: 'assets/images/pulse.png',
+                //   imgSrc2: 'assets/images/onion.png',
+                //   imgSrc3: 'assets/images/potato.png',
+                // ),
+                heightSizedBox(10.0),
+                EditTextField(
+                  // hoverColor: borderColor,
+                  textAlign: TextAlign.left,
+                  txtColor: txtBlackColor,
+                  headTxt: 'Write Description',
+                  // fillColor: borderColor,
+                  hintText: 'Enter Description',
+                  maxLines: 5,
+                  controller: descriptionController,
+                  validator: validateField,
+                )
+              ],
+            ),
+          ),
+        );
+      }),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20),
         child: Btn(

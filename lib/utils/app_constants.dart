@@ -19,6 +19,9 @@ class URLConstants {
   // ! WishList and Cart
   static const cartUrl = baseUrl + 'cart';
   static const wishListUrl = baseUrl + 'wishlist';
+  static const orderUrl = baseUrl + 'order';
+
+  // 1Ordere
 
   // ! SELLER URLS
   static const selProdUrl = baseUrl + 'selproduct';

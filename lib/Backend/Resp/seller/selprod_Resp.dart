@@ -8,7 +8,7 @@ class SelProdRespo {
     final response = await getDioRequest(
       URLConstants.selProdUrl,
     );
-    print(response);
+    // print(response);
 
     if (response['success'] == 1) {
       return response;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:groce1/Backend/Bloc/seller/selprod_bloc.dart';
+import 'package:groce1/sellerPart/selProdEditScr.dart';
 import '../Screen/wishlistScr.dart';
+import '../common/button.dart';
 import '../common/dialogBoxS.dart';
 import '../common/formfield.dart';
 import '../scrpart/imgslider.dart';
@@ -20,12 +22,13 @@ class SelProdListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: offWhiteColor,
+      appBar: AppBar(
+        backgroundColor: offWhiteColor,
         centerTitle: true,
         title: Text(
-            'Seller Product List',
-          ),
-          automaticallyImplyLeading: false,
+          'Seller Product List',
+        ),
+        automaticallyImplyLeading: false,
       ),
       floatingActionButton: InkWell(
         onTap: () => navigationPush(context, SelProdAddScreen()),
@@ -42,9 +45,7 @@ class SelProdListScreen extends StatelessWidget {
         child: BlocConsumer<SelProductBloc, SelProductState>(
             listener: (context, state) {},
             builder: (context, state) {
-
               if (state is SelProdSuccessState) {
-
                 if (state.data.length > 0) {
                   return Container(
                       child: ListView.builder(
@@ -66,45 +67,29 @@ class SelProdListScreen extends StatelessWidget {
                               width: 120,
                               height: 100,
                             ),
-                            ProdMidContent(prodNumber: state.data[i]),
+                            SelProdContent(
+                                prodNumber: state.data[i],),
                             ProdLastContent(
-                              // src: 'assets/icons/delete-icon.png',
-                              btnOnTap: () async {
-                                await showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertBox(
-                                      title: 'Product Price',
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          EditTextField(
-                                            vertical: 15,
-                                            textAlign: TextAlign.left,
-                                            txtColor: txtBlackColor,
-                                            headTxt: 'MRP',
-                                            // fillColor: borderColor,
-                                            hintText: 'Enter MRP Price',
-                                            controller: mrpPriceController,
-                                          ),
-                                          heightSizedBox(10),
-                                          EditTextField(
-                                            vertical: 15,
-                                            textAlign: TextAlign.left,
-                                            txtColor: txtBlackColor,
-                                            headTxt: 'Offer Price',
-                                            // fillColor: borderColor,
-                                            hintText: 'Enter Offer Price',
-                                            controller: offerPriceController,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
+                              src: 'assets/icons/delete-icon.png',
+                        
+                              btnOnTap: () {
+                                navigationPush(
+                                    context,
+                                    SelProdEditScreen(
+                                      prodNumber: state.data[i],
+                                    ));
                               },
+                              
                               btnName: ' Edit   ',
-                              removeBtn: false,
+                              removeBtn: true,
+                              onTap: (){
+                                 BlocProvider.of<SelProductBloc>(context,
+                                        listen: false)
+                                    .add(SelProdDelEvent(
+                                  id: '${state.data[i]['id']}',
+                                  context: context,
+                                ));
+                              },
                             ),
                           ],
                         ),
@@ -127,3 +112,129 @@ class SelProdListScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+class SelProdContent extends StatelessWidget {
+  final dynamic prodNumber;
+
+
+  const SelProdContent(
+      {Key? key, this.prodNumber, })
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Txt(
+              t: '4.6',
+              fontSize: 13,
+              color: greyColor,
+            ),
+            
+          ],
+        ),
+
+        // ! Title
+        Container(
+          child: Txt(
+            t: '${prodNumber['title'].toString()}',
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Container(
+          alignment: Alignment.topLeft,
+          child: Txt(
+            t: 'stock ${prodNumber['stock'].toString()}',
+            fontSize: 13,
+            color: greyColor,
+          ),
+        ),
+
+        Container(
+          alignment: Alignment.topLeft,
+          child: Txt(
+            t: 'MRP:-${prodNumber['salesPrice']}',
+            fontSize: 13,
+            decoration: TextDecoration.lineThrough,
+            color: greyColor,
+          ),
+        ),
+
+        Container(
+          alignment: Alignment.topLeft,
+          child: Txt(
+            t: 'Rs ${prodNumber['discountPrice']}',
+            fontSize: 13,
+            style: labelTextStyle,
+            color: greyColor,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// // ! Product  last content
+// class ProdLastContent extends StatelessWidget {
+//   final dynamic onTap;
+
+//   final String? src;
+//   final Widget? child;
+//   final dynamic btnOnTap;
+//   final String? btnName;
+//   final bool? removeBtn;
+
+//   ProdLastContent(
+//       {Key? key,
+//       this.onTap,
+//       this.src,
+//       this.removeBtn,
+//       this.child,
+//       this.btnOnTap,
+//       this.btnName})
+//       : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.only(top: 5.0, right: 8.0),
+//       child: Column(
+//         // mainAxisAlignment: MainAxisAlignment.spaceAround,
+//         children: [
+//           Container(
+//               child: removeBtn == true
+//                   ? InkWell(
+//                       onTap: onTap,
+//                       child: ImgIcon(
+//                         color: redColor,
+//                         src: 'assets/icons/delete-icon.png',
+//                         width: 15,
+//                         height: 15,
+//                       ),
+//                     )
+//                   : null),
+//           heightSizedBox(20.0),
+//           Padding(
+//             padding: const EdgeInsets.all(20),
+//             child: Btn(
+//               padding: EdgeInsets.all(3),
+//               onTap: btnOnTap,
+//               btnName: btnName ?? 'MOVE INTO BAG',
+//               style: TextStyle(color: txtWhiteColor, fontSize: 10),
+//               color: offgreenColor,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
