@@ -63,7 +63,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   // ! Update cart and WishlIst Item
   void _cartUpdateMethod(CartItemPutEvent event, Emitter emit) async {
-    print(event);
+    // print(event);
     emit(CartLoadingState());
     try {
       var user = await prodResp.cartUpdateResp(

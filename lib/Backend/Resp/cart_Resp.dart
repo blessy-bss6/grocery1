@@ -7,18 +7,12 @@ import '/utils/http_services.dart';
 
 class CartRespo {
   Future<dynamic> cartResp() async {
-    // dynamic usertoken = await getCurrentUser();
-    // // print(usertoken);
-
-    // Map<String, dynamic> header = Map<String, dynamic>();
-    // header['Authorization'] = "Bearer " + usertoken;
-    // // header['Content-Type'] = 'application/json';
+   
 
     final response = await getDioRequest(
       URLConstants.cartUrl,
     );
-    // print(response);
-
+    
     if (response != null) {
       return response;
     } else {

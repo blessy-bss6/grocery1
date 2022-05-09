@@ -11,6 +11,7 @@ import 'Screen/dashBoard.dart';
 // import 'sellerPart/selProdAddScr.dart';
 // import 'sellerPart/selProdListScr.dart';
 // import 'sellerPart/selTransScr.dart';
+import 'Screen/login.dart';
 import 'utils/shared_preferences.dart';
 
 // class MyHttpOverrides extends HttpOverrides {
@@ -21,7 +22,7 @@ import 'utils/shared_preferences.dart';
 //           (X509Certificate cert, String host, int port) => true;
 //   }
 // }
-
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {
   // HttpOverrides.global = new MyHttpOverrides();
   runApp(MyApp());
@@ -43,7 +44,15 @@ class MyApp extends StatelessWidget {
             // appBarTheme: const AppBarTheme(color: redColor)
             ),
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        // home: SplashScreen(),
+        initialRoute: '/',
+        navigatorKey: navigatorKey,
+        routes: {
+          // When navigating to the "/" route, build the FirstScreen widget.
+          '/': (context) =>  SplashScreen(),
+          // When navigating to the "/second" route, build the SecondScreen widget.
+          '/login': (context) =>  LoginScr(),
+        },
         // home:ProdData()
       ),
     );

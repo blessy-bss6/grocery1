@@ -117,134 +117,16 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// class HomeScreen extends StatelessWidget {
-//   HomeScreen({Key? key}) : super(key: key);
-//   var scaffoldKey = GlobalKey<ScaffoldState>();
-//   final TextEditingController? searchController = TextEditingController();
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       key: scaffoldKey,
-//       appBar: BaseAppBar(
-//         // boolLeading: false,
-//         leading: IconButton(
-//           icon: Icon(
-//             Icons.account_circle_rounded,
-//             color: txtBlackColor,
-//           ),
-//           // onPressed: () => Scaffold.of(context).openDrawer(),
-//           onPressed: () {
-//             scaffoldKey.currentState?.openDrawer();
-//           },
-//         ),
-//         title: 'Hey, Username',
-//         centerTitle: true,
-//         actionList: [
-//           IconBtn(
-//             onPressed: () => navigationPush(context, NotificationScreen()),
-//             icon: Icons.notification_add_outlined,
-//             size: 20,
-//             color: txtBlackColor,
-//           )
-//         ],
-//       ),
-//       drawer: DrawerScreen(),
-//       body: SingleChildScrollView(
-//         child: Column(
-//           //   ListView(
-//           // shrinkWrap: true,
-//           children: [
-//             heightSizedBox(5.0),
-//             Stack(
-//               children: [
-//                 Padding(
-//                   padding: const EdgeInsets.only(left: 10.0),
-//                   child: AddressPart(),
-//                 ),
-//                 Padding(
-//                   padding:
-//                       const EdgeInsets.only(top: 43.0, left: 15, right: 15),
-//                   child: SearchBox(
-//                     fillColor: dashBgColor,
-//                     controller: searchController,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             ListView(shrinkWrap: true, children: [
-//               heightSizedBox(20.0),
-//               ImgSlider(),
-//               heightSizedBox(20.0),
-//               CategoryListItem(),
-//               heightSizedBox(20.0),
-//               HomeProdGridList(),
-//             ]),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// 1 Search and Address Part
-// class SearchPart extends StatelessWidget {
-//   const SearchPart({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.only(
-//         left: 10.0,
-//         right: 15.0,
-//       ),
-//       child: Container(
-//         decoration: BoxDecoration(
-//           color: Color.fromARGB(246, 246, 246, 255),
-//           border: Border.all(width: .5),
-//           borderRadius: BorderRadius.circular(5),
-//         ),
-//         padding: EdgeInsets.only(left: 15),
-//         child: TextFormField(
-//           decoration: InputDecoration(
-//             border: InputBorder.none,
-//             hintText: 'Search here',
-//             // prefixIcon: Icon(Icons.search),
-//             suffixIcon: IconBtn(
-//               icon: Icons.search,
-//               color: blackColor,
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 // ! Address Part in Home
 class AddressPart extends StatelessWidget {
   final Widget? trailing;
-  const AddressPart({Key? key, this.trailing}) : super(key: key);
+ final  dynamic onPressed;
+  const AddressPart({Key? key, this.trailing, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // decoration: BoxDecoration(
-      //   color: Color.fromARGB(246, 246, 246, 255),
-      //   border: Border.all(width: .5),
-      //   borderRadius: BorderRadius.circular(5),
-      // ),
-      // padding: EdgeInsets.all(0),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        // Container(
-        //   color: Color.fromARGB(255, 152, 166, 45),
-        //   padding: EdgeInsets.all(.3),
-        //   child: IconBtn(
-        //     color2: offWhiteColor,
-        //     color: offWhiteColor,
-        //     icon: Icons.location_on_outlined,
-        //   ),
-        // ),
-
         Row(
           children: [
             ImgIcon(
@@ -262,7 +144,7 @@ class AddressPart extends StatelessWidget {
                     t: 'Your Location',
                     fontSize: 13,
                   ),
-                  Txt(t: '48,2nd floor ,jagatpura,Jaipur'),
+                  Txt(t: ''),
                 ],
               ),
             ),
@@ -270,8 +152,12 @@ class AddressPart extends StatelessWidget {
         ),
         Container(
             alignment: Alignment.topRight,
-            child:
-                trailing != null ? IconBtn(icon: Icons.chevron_right) : null),
+            child: trailing != null
+                ? IconBtn(
+                    icon: Icons.chevron_right,
+                    onPressed: onPressed,
+                  )
+                : null),
       ]),
     );
   }

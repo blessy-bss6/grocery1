@@ -18,12 +18,12 @@ class OrderRespo {
   }
 
   Future<dynamic> orderAddResp({
-    String? product,
+  dynamic orderData
   }) async {
-    final response = await postDioRequest(URLConstants.orderUrl, data: {
-      "product": product,
-    });
-    print(product);
+
+    print(orderData);
+    final response = await postDioRequest(URLConstants.orderUrl, data: orderData);
+    
     print(response);
 
     if (response != null) {

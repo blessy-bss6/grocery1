@@ -82,7 +82,8 @@ class EditTextField extends StatelessWidget {
               onTap: onTap,
               style: style ?? TextStyle(color: txtColor ?? txtWhiteColor),
               textAlign: textAlign ?? TextAlign.start,
-              // autovalidateMode: AutovalidateMode.onUserInteraction,
+              
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               onChanged: onChanged,
               inputFormatters: inputFormatters,
               initialValue: initialValue,
@@ -102,7 +103,7 @@ class EditTextField extends StatelessWidget {
               scrollPadding: EdgeInsets.zero,
               decoration: InputDecoration(
                 fillColor: fillColor, filled: filled ?? true,
-                errorStyle: TextStyle(color: blackColor),
+                errorStyle: TextStyle(color: redColor),
                 errorText: errorText,
                 hoverColor: hoverColor,
                 counter: Offstage(),
@@ -126,7 +127,7 @@ class EditTextField extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5)),
                 errorBorder: formBox == true
                     ? OutlineInputBorder(
-                        borderSide: BorderSide(color: borderColor, width: 1.0),
+                        borderSide: BorderSide(color:offWhiteColor, width: 1.0),
                       )
                     : UnderlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -404,6 +405,56 @@ class SearchBox extends StatelessWidget {
                 ? Icon(Icons.cancel)
                 : Icon(Icons.search),
           )),
+    );
+  }
+}
+
+// ! RadioBtn
+class RadioBtn extends StatelessWidget {
+  dynamic groupValue;
+  String title;
+  dynamic value;
+  final Widget? subTitle;
+  Function(dynamic)? onChanged;
+  RadioBtn(
+      {Key? key,
+      this.subTitle,
+      required this.title,
+      this.value,
+      this.groupValue,
+      this.onChanged})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: -7,
+          children: [
+            RadioListTile(
+              value: value,
+              groupValue: groupValue,
+              onChanged: onChanged,
+              title:
+               Text(
+                title.toString(),
+                maxLines: 1,
+                style: labelTextStyle,
+                textDirection: TextDirection.ltr,
+                textAlign: TextAlign.start,
+              ),
+              subtitle: subTitle,
+            ),
+
+            // Text(
+            //   title.toString(),
+            //   maxLines: 1,
+            //   style: labelTextStyle,
+            //   textDirection: TextDirection.ltr,
+            //   textAlign: TextAlign.start,
+            // ),
+          ]),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Screen/helpScr.dart';
 import '../Screen/login.dart';
 import '../Screen/offerScr.dart';
+import '../Screen/order.dart';
 import '../Screen/orderScr.dart';
 import '../utils/common.dart';
 import '../utils/style.dart';
@@ -69,7 +70,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       CusDrawerList(
         title: 'Logout',
         icon: Icons.logout,
-          onTap: () => logOutDialog(context),
+        onTap: () => logOutDialog(context),
       ),
     ]));
   }
@@ -85,12 +86,9 @@ class CusDrawerList extends StatelessWidget {
   final IconData? icon;
   final dynamic onTap;
 
-  CusDrawerList({
-    Key? key,
-    this.title,
-    this.icon,
-    this.submitMethod,this.onTap
-  }) : super(key: key);
+  CusDrawerList(
+      {Key? key, this.title, this.icon, this.submitMethod, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

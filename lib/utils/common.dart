@@ -59,9 +59,13 @@ Container verticalDivider(height) {
 }
 
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snackBar(
-    BuildContext context, String message) {
+  BuildContext context,
+  String message, {
+  Color? bgColor,
+}) {
   return ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      backgroundColor: bgColor,
       content: Text(message),
     ),
   );

@@ -1,201 +1,202 @@
-import 'package:flutter/material.dart';
-import '../Elements/baseAppbar.dart';
-import '../common/button.dart';
-import '../scrpart/orderDetbody.dart';
-import '../utils/common.dart';
-import '../utils/style.dart';
+// import 'package:flutter/material.dart';
+// import '../Elements/baseAppbar.dart';
+// import '../common/button.dart';
+// import '../scrpart/orderDetbody.dart';
+// import '../utils/common.dart';
+// import '../utils/style.dart';
 
-class OrderScreen extends StatelessWidget {
-  const OrderScreen({Key? key}) : super(key: key);
+// class OrderScreen extends StatelessWidget {
+//   final dynamic addressId;
+//   const OrderScreen({Key? key, this.addressId}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: BaseAppBar(
-        centerTitle: true,
-        title: 'Order',
-      ),
-      body: Container(
-        child: ListView.builder(
-            itemCount: 5,
-            shrinkWrap: true,
-            itemBuilder: (context, i) {
-              return Container(
-                margin: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                    color: offWhiteColor,
-                    border: Border(
-                        bottom: BorderSide(
-                            width: 1.0,
-                            color: Color.fromARGB(255, 221, 214, 214)))
-                    // border: Border.all(
-                    //     width: 1, color: Color.fromARGB(255, 221, 214, 214))
-                    ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    OrderIdContent(
-                      t1: '#52525522',
-                      t2: '24 Sep,2020',
-                    ),
-                    heightSizedBox(10.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Txt(
-                          t: 'items ',
-                          style: labelTextStyle,
-                        ),
-                        Txt(
-                          t: 'Rs. 250.00',
-                          fontSize: 15,
-                          color: Colors.green,
-                        )
-                      ],
-                    ),
-                    OrderItemShowList(
-                      count: 2,
-                    ),
-                    heightSizedBox(5.0),
-                    OrderItemStatus(status: 'Delivered', statusVal: 'Cancel')
-                  ],
-                ),
-              );
-            }),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: BaseAppBar(
+//         centerTitle: true,
+//         title: 'Order',
+//       ),
+//       body: Container(
+//         child: ListView.builder(
+//             itemCount: 5,
+//             shrinkWrap: true,
+//             itemBuilder: (context, i) {
+//               return Container(
+//                 margin: EdgeInsets.all(8.0),
+//                 decoration: BoxDecoration(
+//                     color: offWhiteColor,
+//                     border: Border(
+//                         bottom: BorderSide(
+//                             width: 1.0,
+//                             color: Color.fromARGB(255, 221, 214, 214)))
+//                     // border: Border.all(
+//                     //     width: 1, color: Color.fromARGB(255, 221, 214, 214))
+//                     ),
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.start,
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     OrderIdContent(
+//                       t1: '#52525522',
+//                       t2: '24 Sep,2020',
+//                     ),
+//                     heightSizedBox(10.0),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: [
+//                         Txt(
+//                           t: 'items ',
+//                           style: labelTextStyle,
+//                         ),
+//                         Txt(
+//                           t: 'Rs. 250.00',
+//                           fontSize: 15,
+//                           color: Colors.green,
+//                         )
+//                       ],
+//                     ),
+//                     OrderItemShowList(
+//                       count: 2,
+//                     ),
+//                     heightSizedBox(5.0),
+//                     OrderItemStatus(status: 'Delivered', statusVal: 'Cancel')
+//                   ],
+//                 ),
+//               );
+//             }),
+//       ),
+//     );
+//   }
+// }
 
-class OrderItemShowList extends StatefulWidget {
-  int? count;
-  OrderItemShowList({Key? key, this.count}) : super(key: key);
+// class OrderItemShowList extends StatefulWidget {
+//   int? count;
+//   OrderItemShowList({Key? key, this.count}) : super(key: key);
 
-  @override
-  State<OrderItemShowList> createState() => _OrderItemShowListState();
-}
+//   @override
+//   State<OrderItemShowList> createState() => _OrderItemShowListState();
+// }
 
-class _OrderItemShowListState extends State<OrderItemShowList> {
-  int prodNumber = 10;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.count ?? prodNumber,
-              itemBuilder: (context, i) =>
-                  Txt(t: 'itemname', style: smallTextStyle)),
-          Container(
-            child: widget.count! < prodNumber
-                ? InkWell(
-                    onTap: () => setState(() {
-                      widget.count = prodNumber;
-                    }),
-                    child: Txt(
-                      t: 'view more',
-                      fontSize: 10,
-                      color: textBlueColor,
-                    ),
-                  )
-                : widget.count == prodNumber
-                    ? InkWell(
-                        onTap: () => setState(() {
-                          widget.count = 2;
-                        }),
-                        child: Txt(
-                          t: 'view less',
-                          fontSize: 10,
-                          color: textBlueColor,
-                        ),
-                      )
-                    : null,
-          )
-        ],
-      ),
-    );
-  }
-}
+// class _OrderItemShowListState extends State<OrderItemShowList> {
+//   int prodNumber = 10;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.start,
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           ListView.builder(
+//               shrinkWrap: true,
+//               itemCount: widget.count ?? prodNumber,
+//               itemBuilder: (context, i) =>
+//                   Txt(t: 'itemname', style: smallTextStyle)),
+//           Container(
+//             child: widget.count! < prodNumber
+//                 ? InkWell(
+//                     onTap: () => setState(() {
+//                       widget.count = prodNumber;
+//                     }),
+//                     child: Txt(
+//                       t: 'view more',
+//                       fontSize: 10,
+//                       color: textBlueColor,
+//                     ),
+//                   )
+//                 : widget.count == prodNumber
+//                     ? InkWell(
+//                         onTap: () => setState(() {
+//                           widget.count = 2;
+//                         }),
+//                         child: Txt(
+//                           t: 'view less',
+//                           fontSize: 10,
+//                           color: textBlueColor,
+//                         ),
+//                       )
+//                     : null,
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
 
-// ! Order Status
-class OrderItemStatus extends StatelessWidget {
-  final String? statusVal;
-  final String? status;
-  const OrderItemStatus({Key? key, this.status, this.statusVal})
-      : super(key: key);
+// // ! Order Status
+// class OrderItemStatus extends StatelessWidget {
+//   final String? statusVal;
+//   final String? status;
+//   const OrderItemStatus({Key? key, this.status, this.statusVal})
+//       : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.bottomLeft,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            child: statsBox(),
-          ),
-          IconTxtWid(
-            txt: status ?? '',
-            color: redColor,
-            // icon:
-          )
-        ],
-      ),
-    );
-  }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       alignment: Alignment.bottomLeft,
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           Container(
+//             child: statsBox(),
+//           ),
+//           IconTxtWid(
+//             txt: status ?? '',
+//             color: redColor,
+//             // icon:
+//           )
+//         ],
+//       ),
+//     );
+//   }
 
-  Widget statsBox() {
-    if (statusVal == 'Delivered') {
-      return IconTxtWid(
-        icon: Icons.add_task_rounded,
-        txt: 'Delivered',
-        color: offgreenColor,
-      );
-    }
-    if (statusVal == 'Cancel') {
-      return IconTxtWid(
-        icon: Icons.cancel,
-        txt: 'Cancel',
-        color: redColor,
-      );
-    }
+//   Widget statsBox() {
+//     if (statusVal == 'Delivered') {
+//       return IconTxtWid(
+//         icon: Icons.add_task_rounded,
+//         txt: 'Delivered',
+//         color: offgreenColor,
+//       );
+//     }
+//     if (statusVal == 'Cancel') {
+//       return IconTxtWid(
+//         icon: Icons.cancel,
+//         txt: 'Cancel',
+//         color: redColor,
+//       );
+//     }
 
-    return Container(
-      child: Btn(
-        height: 25,
-        width: 80,
-        btnName: 'TrackOrder',
-        txtColor: txtWhiteColor,
-        color: offgreenColor,
-      ),
-    );
-  }
-}
+//     return Container(
+//       child: Btn(
+//         height: 25,
+//         width: 80,
+//         btnName: 'TrackOrder',
+//         txtColor: txtWhiteColor,
+//         color: offgreenColor,
+//       ),
+//     );
+//   }
+// }
 
-class IconTxtWid extends StatelessWidget {
-  final String? txt;
-  final IconData? icon;
-  final Color? color;
-  const IconTxtWid({Key? key, this.txt, this.color, this.icon})
-      : super(key: key);
+// class IconTxtWid extends StatelessWidget {
+//   final String? txt;
+//   final IconData? icon;
+//   final Color? color;
+//   const IconTxtWid({Key? key, this.txt, this.color, this.icon})
+//       : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-      IconBtn(
-        icon: icon,
-        color2: color,
-        size: 18,
-      ),
-      Txt(
-        t: txt ?? '',
-        color: redColor,
-      ),
-    ]));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//         child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+//       IconBtn(
+//         icon: icon,
+//         color2: color,
+//         size: 18,
+//       ),
+//       Txt(
+//         t: txt ?? '',
+//         color: redColor,
+//       ),
+//     ]));
+//   }
+// }

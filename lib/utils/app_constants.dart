@@ -1,6 +1,6 @@
 class URLConstants {
   // static const baseUrl = "https://reqres.in/";
-  static const baseUrl = "http://127.0.0.1:8000/";
+  static const baseUrl = "http://10.0.2.2:8080/";
 
   ///API onBoarding************************************************************************
   static const signUpApiUrl = baseUrl + 'register';
@@ -20,6 +20,7 @@ class URLConstants {
   static const cartUrl = baseUrl + 'cart';
   static const wishListUrl = baseUrl + 'wishlist';
   static const orderUrl = baseUrl + 'order';
+  static const addressUrl = baseUrl + 'address';
 
   // 1Ordere
 

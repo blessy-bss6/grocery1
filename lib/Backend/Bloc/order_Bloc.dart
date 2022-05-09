@@ -8,21 +8,21 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   OrderRespo orderResp = OrderRespo();
 
   OrderBloc() : super(OrderInitialState()) {
-    on<FetchOrderEvent>(_OrderMethod);
+    on<FetchOrderEvent>(_orderMethod);
 
     // ====================ADD==========================
-    on<OrderItemAddEvent>(_OrderAddMethod);
+    on<OrderItemAddEvent>(_orderAddMethod);
 
     // ! Update Order and Wishlist
     // on<OrderItemPutEvent>(_OrderUpdateMethod);
 
     // ! Delete Order and Wishlist
-    on<OrderItemDelEvent>(_OrderDeleteMethod);
+    on<OrderItemDelEvent>(_orderDeleteMethod);
   }
 
   //  ! Order Data Get
 
-  void _OrderMethod(FetchOrderEvent event, Emitter emit) async {
+  void _orderMethod(FetchOrderEvent event, Emitter emit) async {
     // print(event);
     emit(OrderLoadingState());
     try {
@@ -38,12 +38,12 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   }
 
   //  ============ Order AND WISHLIST PRODUCT ADD ======================
-  _OrderAddMethod(OrderItemAddEvent event, Emitter emit) async {
+  _orderAddMethod(OrderItemAddEvent event, Emitter emit) async {
     // print(event);
     emit(OrderLoadingState());
     try {
       var user = await orderResp.orderAddResp(
-        product: event.prodNumber,
+        orderData: event.orderData,
       );
       // print('user data $user');
       if (user['success'] == 1) {
@@ -82,7 +82,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   // }
 
   // ! Delete for Order AND WISHLIST
-  void _OrderDeleteMethod(OrderItemDelEvent event, Emitter emit) async {
+  void _orderDeleteMethod(OrderItemDelEvent event, Emitter emit) async {
     // print(event);
     emit(OrderLoadingState());
     try {
@@ -118,23 +118,23 @@ class FetchOrderEvent extends OrderEvent {
 
 // 1 Order Item Add and Wishlist add
 class OrderItemAddEvent extends OrderEvent {
-  final String? prodNumber;
+  final dynamic orderData;
   final dynamic context;
 
-  OrderItemAddEvent({required this.prodNumber, this.context});
+  OrderItemAddEvent({required this.orderData, this.context});
   @override
   List<Object> get props => [];
 }
 
 //  Order Item Event
-class OrderItemPutEvent extends OrderEvent {
-  final String? id;
-  final int? quantity;
-  final dynamic context;
-  OrderItemPutEvent({required this.id, required this.quantity, this.context});
-  @override
-  List<Object> get props => [];
-}
+// class OrderItemPutEvent extends OrderEvent {
+//   final String? id;
+//   final int? quantity;
+//   final dynamic context;
+//   OrderItemPutEvent({required this.id, required this.quantity, this.context});
+//   @override
+//   List<Object> get props => [];
+// }
 
 class OrderItemDelEvent extends OrderEvent {
   final String? id;

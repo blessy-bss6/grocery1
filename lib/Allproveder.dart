@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/single_child_widget.dart';
 
+import 'Backend/Bloc/address_Bloc.dart';
 import 'Backend/Bloc/cart_Bloc.dart';
 import 'Backend/Bloc/order_Bloc.dart';
 import 'Backend/Bloc/otpsBloc.dart';
@@ -19,6 +20,7 @@ class MainBloc {
       BlocProvider(create: (ctx) => WishListBloc()),
       BlocProvider(create: (ctx) => SelProductBloc()),
       BlocProvider(create: (ctx) => OrderBloc()),
+      BlocProvider(create: (ctx) => AddressBloc()),
     ];
   }
 }
