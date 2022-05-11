@@ -11,35 +11,33 @@ class OrderCompleteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: BaseAppBar(
-        centerTitle: true,
-        title: 'Order Complete',
-        leadingOnTap: () => navigationPush(
-            context,
-            UserNavigationBar(
-              currentTab: 0,
-            )),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        // crossAxisAlignment: ,
-        children: [
-          Center(
-            child: Txt(
-              t: 'Your Order has been                               \n        accepted',
-              style: labelTextStyle,
+    return WillPopScope(
+      onWillPop: () => willPopCallback(context, true),
+      child: Scaffold(
+        appBar: BaseAppBar(
+          centerTitle: true,
+          title: 'Order Complete',
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: ,
+          children: [
+            Center(
+              child: Txt(
+                t: 'Your Order has been                               \n        accepted',
+                style: labelTextStyle,
+              ),
             ),
-          ),
-          heightSizedBox(5.0),
-          Center(
-            child: Txt(
-              t: "Your Items has been placed and is on \n It's way to being processed",
-              style: smallTextStyle,
+            heightSizedBox(5.0),
+            Center(
+              child: Txt(
+                t: "Your Items has been placed and is on \n It's way to being processed",
+                style: smallTextStyle,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

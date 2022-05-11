@@ -7,12 +7,11 @@ import '../Backend/Bloc/address_Bloc.dart';
 import '../common/button.dart';
 import '../common/formfield.dart';
 import '../common/validate.dart';
-import '../scrpart/orderDetbody.dart';
+
 import '../utils/common.dart';
 import '../utils/style.dart';
 import 'cartScr.dart';
 import 'order.dart';
-import 'orderScr.dart';
 
 class AddressScreen extends StatefulWidget {
   final dynamic orderData;
@@ -29,9 +28,9 @@ class _AddressScreenState extends State<AddressScreen> {
 
   @override
   void initState() {
+    super.initState();
     addressB = BlocProvider.of<AddressBloc>(context, listen: false);
     addressB.add(FetchAddressEvent());
-    super.initState();
   }
 
   @override
@@ -53,10 +52,17 @@ class _AddressScreenState extends State<AddressScreen> {
       ),
       body: BlocConsumer<AddressBloc, AddressState>(listener: (context, state) {
         if (state is AddressSuccessState) {
-          setState(() {
-            // addressId = state.data['data'][0]['id'];
-             addressId = state.data['data'][0];
-          });
+          if (state.data['data'].length > 0) {
+            setState(() {
+              // addressId = state.data['data'][0]['id'];
+              addressId = state.data['data'][0];
+            });
+          } else {
+            setState(() {
+              // addressId = state.data['data'][0]['id'];
+              addressId = null;
+            });
+          }
         }
       }, builder: (context, state) {
         if (state is AddressSuccessState) {
@@ -100,7 +106,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                     onChanged: (val) => setState(() {
                                       groupValue = index;
                                       // addressId = lData[index]['id'];
-                                       addressId = lData[index];
+                                      addressId = lData[index];
                                     }),
                                     title: '${lData[index]['fullname']}',
                                     subTitle: Column(

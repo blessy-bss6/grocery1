@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:groce1/Screen/dashBoard.dart';
 import '../scrpart/imgslider.dart';
 import '../utils/common.dart';
 import '../utils/style.dart';
@@ -34,8 +35,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: bgColor ?? offWhiteColor,
       elevation: elevation,
        iconTheme: IconThemeData(color: Colors.black),
-      // automaticallyImplyLeading: boolLeading ?? true,
-      // leading: leading,
+      automaticallyImplyLeading: boolLeading ??true,
+      leading: IconButton(icon: Icon(Icons.arrow_back),color: blackColor, onPressed: leadingOnTap ?? ()=> navigationPushReplacement(context,widget: UserNavigationBar(currentTab: 0,)),) ,
       title: title != null
           ? Text(title!, style: TextStyle(fontFamily: montserratMedium,color: orangeColor))
           : null,

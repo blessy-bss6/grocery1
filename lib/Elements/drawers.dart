@@ -39,7 +39,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
       CusDrawerList(
         title: 'Your Orders',
         icon: Icons.shopping_bag,
-        submitMethod: OrderScreen(),
+        // submitMethod: OrderScreen(),
+        submitMethod: OrderScr2(),
       ),
       CusDrawerList(
         title: 'Wishlist',

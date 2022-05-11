@@ -2,6 +2,11 @@ class URLConstants {
   // static const baseUrl = "https://reqres.in/";
   static const baseUrl = "http://10.0.2.2:8080/";
 
+    static const String razaoryKey =
+      "ck_e574cd75f0fedf68fda0fa8fd99c17f54665a4c6";
+  static const String razaoryKeypassword =
+      "cs_9e084118b1fdba78c85c24b6a209fdf382057e5e";
+
   ///API onBoarding************************************************************************
   static const signUpApiUrl = baseUrl + 'register';
   static const loginApiUrl = baseUrl + 'login';

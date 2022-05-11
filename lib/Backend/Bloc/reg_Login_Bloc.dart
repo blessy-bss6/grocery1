@@ -25,20 +25,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // print('user data $user');
       if (user['success'] == 1) {
         if (user['isIdType'] == true) {
-          navigationPushReplacement(
-              event.context, SellerNavigationBar(currentTab: 0));
+          navigationPushReplacement(event.context,
+              widget: SellerNavigationBar(currentTab: 0));
         } else {
-          navigationPushReplacement(
-              event.context, UserNavigationBar(currentTab: 0));
+          navigationPushReplacement(event.context,
+              widget: UserNavigationBar(currentTab: 0));
         }
-        
 
         emit(AuthSuccessState());
       }
 
       if (user['success'] == 0) {
         snackBar(event.context, user['msg']);
-        
+
         emit(AuthInitialState());
       }
 
@@ -63,18 +62,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // print('user data $user');
       if (user['success'] == 1) {
         if (user['isIdType'] == true) {
-          navigationPushReplacement(
-              event.context, SellerNavigationBar(currentTab: 0));
+          navigationPushReplacement(event.context,
+              widget: SellerNavigationBar(currentTab: 0));
         } else {
-          navigationPushReplacement(
-              event.context, UserNavigationBar(currentTab: 0));
+          navigationPushReplacement(event.context,
+              widget: UserNavigationBar(currentTab: 0));
         }
 
         emit(AuthSuccessState());
       }
       if (user['success'] == 0) {
         snackBar(event.context, user['msg']);
-        
+
         emit(AuthInitialState());
       }
       // emit(AuthInitialState());

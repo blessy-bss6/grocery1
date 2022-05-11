@@ -19,100 +19,104 @@ class HomeScreen extends StatelessWidget {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      body: CustomScrollView(
-        slivers: [
-          // ! Sliver app Bar
-          SliverAppBar(
-            backgroundColor: offWhiteColor,
-            leading: IconButton(
-              icon: Icon(
-                Icons.account_circle_rounded,
-                color: txtBlackColor,
-              ),
-              // onPressed: () => Scaffold.of(context).openDrawer(),
-              onPressed: () {
-                scaffoldKey.currentState?.openDrawer();
-              },
-            ),
-            title: Text(
-              'Hey, Username',
-              style: appBarTS,
-            ),
-            centerTitle: true,
-            bottom: PreferredSize(
-                preferredSize: Size.fromHeight(80),
-                child: Container(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
-                        child: AddressPart(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 15.0),
-                        child: SearchBox(
-                          fillColor: FaqBgColor,
-                          controller: searchController,
-                        ),
-                      ),
-                    ],
-                  ),
-                )),
-            actions: <Widget>[
-              IconBtn(
-                onPressed: () => navigationPush(context, NotificationScreen()),
-                icon: Icons.notification_add_outlined,
-                size: 20,
-                color: txtBlackColor,
-              )
-            ],
-          ),
-          SliverList(
-            delegate:
-                SliverChildListDelegate([ImgSlider(), CategoryListItem()]),
-          ),
-
-          // ! First List
-          SliverPadding(
-            padding: const EdgeInsets.all(3),
-            sliver: SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  Divider(),
-                  Container(
-                      alignment: Alignment.center,
-                      child: Txt(
-                        t: 'Exclusive Product ',
-                        color: marronColor,
-                      )),
-                ],
-              ),
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.all(5.0),
-            sliver: SliverGrid(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: MediaQuery.of(context).size.width /
-                      (MediaQuery.of(context).size.height / 1.9),
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0,
+    return WillPopScope(
+      onWillPop: () => willPopCallback(context, true),
+      child: Scaffold(
+        key: scaffoldKey,
+        body: CustomScrollView(
+          slivers: [
+            // ! Sliver app Bar
+            SliverAppBar(
+              backgroundColor: offWhiteColor,
+              leading: IconButton(
+                icon: Icon(
+                  Icons.account_circle_rounded,
+                  color: txtBlackColor,
                 ),
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  return CategeoryGridProdList(
-                    // onTap: () => navigationPush(context, ProductShowScreen()),
-                    imageUrl: 'assets/images/banana.png',
-                    title: 'Categoryname',
-                  );
-                }, childCount: 5)),
-          ),
-        ],
+                // onPressed: () => Scaffold.of(context).openDrawer(),
+                onPressed: () {
+                  scaffoldKey.currentState?.openDrawer();
+                },
+              ),
+              title: Text(
+                'Hey, Username',
+                style: appBarTS,
+              ),
+              centerTitle: true,
+              bottom: PreferredSize(
+                  preferredSize: Size.fromHeight(80),
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0),
+                          child: AddressPart(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 15.0),
+                          child: SearchBox(
+                            fillColor: FaqBgColor,
+                            controller: searchController,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+              actions: <Widget>[
+                IconBtn(
+                  onPressed: () =>
+                      navigationPush(context, NotificationScreen()),
+                  icon: Icons.notification_add_outlined,
+                  size: 20,
+                  color: txtBlackColor,
+                )
+              ],
+            ),
+            SliverList(
+              delegate:
+                  SliverChildListDelegate([ImgSlider(), CategoryListItem()]),
+            ),
+
+            // ! First List
+            SliverPadding(
+              padding: const EdgeInsets.all(3),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    Divider(),
+                    Container(
+                        alignment: Alignment.center,
+                        child: Txt(
+                          t: 'Exclusive Product ',
+                          color: marronColor,
+                        )),
+                  ],
+                ),
+              ),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.all(5.0),
+              sliver: SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: MediaQuery.of(context).size.width /
+                        (MediaQuery.of(context).size.height / 1.9),
+                    mainAxisSpacing: 10.0,
+                    crossAxisSpacing: 10.0,
+                  ),
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    return CategeoryGridProdList(
+                      // onTap: () => navigationPush(context, ProductShowScreen()),
+                      imageUrl: 'assets/images/banana.png',
+                      title: 'Categoryname',
+                    );
+                  }, childCount: 5)),
+            ),
+          ],
+        ),
+        drawer: DrawerScreen(),
       ),
-      drawer: DrawerScreen(),
     );
   }
 }
@@ -120,8 +124,9 @@ class HomeScreen extends StatelessWidget {
 // ! Address Part in Home
 class AddressPart extends StatelessWidget {
   final Widget? trailing;
- final  dynamic onPressed;
-  const AddressPart({Key? key, this.trailing, this.onPressed}) : super(key: key);
+  final dynamic onPressed;
+  const AddressPart({Key? key, this.trailing, this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:groce1/utils/common.dart';
+
 
 import '../Resp/order_Resp.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
-  OrderRespo orderResp = OrderRespo();
+  OrderRespo orderRes = OrderRespo();
 
   OrderBloc() : super(OrderInitialState()) {
     on<FetchOrderEvent>(_orderMethod);
@@ -22,16 +22,18 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
   //  ! Order Data Get
 
-  void _orderMethod(FetchOrderEvent event, Emitter emit) async {
+   _orderMethod(FetchOrderEvent event, Emitter emit) async {
     // print(event);
     emit(OrderLoadingState());
     try {
-      dynamic user = await orderResp.orderResp;
+      dynamic user = await orderRes.orderResp();
       // print('user data $user');
       if (user['success'] == 1) {
         emit(OrderSuccessState(data: user));
+      }else{
+     emit(OrderInitialState());
       }
-      // emit(OrderInitialState());
+     
     } catch (e) {
       emit(OrderFailedState());
     }
@@ -42,19 +44,17 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     // print(event);
     emit(OrderLoadingState());
     try {
-      var user = await orderResp.orderAddResp(
+      var user = await orderRes.orderAddResp(
         orderData: event.orderData,
       );
       // print('user data $user');
       if (user['success'] == 1) {
-        emit(OrderSuccessState());
-        // }
-        //else {
-        snackBar(event.context, user['msg'] ?? '');
-        // emit(OrderInitialState());
+        emit(OrderAddSuccessState());
+       
+      } else {
+        // snackBar(event.context, user['msg'] ?? '');
+        emit(OrderInitialState());
       }
-      snackBar(event.context, user['msg'] ?? '');
-      emit(OrderInitialState());
     } catch (e) {
       emit(OrderFailedState());
     }
@@ -86,7 +86,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     // print(event);
     emit(OrderLoadingState());
     try {
-      var user = await orderResp.orderDeleteResp(id: event.id);
+      var usr = await orderRes.orderDeleteResp(id: event.id);
+       dynamic user = await orderRes.orderResp();
       // print('user data $user');
       if (user['success'] == 1) {
         // snackBar(event.context, user['msg']);
@@ -159,6 +160,11 @@ class OrderLoadingState extends OrderState {}
 class OrderSuccessState extends OrderState {
   final dynamic data;
   OrderSuccessState({this.data});
+}
+
+class OrderAddSuccessState extends OrderState {
+  final dynamic data;
+  OrderAddSuccessState({this.data});
 }
 
 class OrderFailedState extends OrderState {

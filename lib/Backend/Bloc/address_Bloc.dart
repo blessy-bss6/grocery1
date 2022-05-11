@@ -29,9 +29,11 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       // print('user data $user');
       if (user['success'] == 1) {
         emit(AddressSuccessState(data: user));
+      }else{
+        
+        emit(AddressInitialState());
       }
 
-      // emit(AddressInitialState());
     } catch (e) {
       emit(AddressFailedState());
     }
@@ -42,12 +44,13 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     // print(event);
     emit(AddressLoadingState());
     try {
-      var user = await prodResp.addressAddResp(
+      var usr = await prodResp.addressAddResp(
         addressItem: event.addressItem,
       );
+      dynamic user = await prodResp.addressResp();
       // print('user data $user');
       if (user['success'] == 1) {
-        emit(AddressAddSuccessState());
+        emit(AddressSuccessState(data: user));
 
         // snackBar(event.context, user['msg'] ?? '');
 
@@ -67,11 +70,12 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     print(event);
     emit(AddressLoadingState());
     try {
-      var user =
+      var usr =
           await prodResp.addressUpdateResp(addressItem: event.addressItem);
+           dynamic user = await prodResp.addressResp();
       // print('user data $user');
       if (user['success'] == 1) {
-        emit(AddressAddSuccessState(data: user));
+        emit(AddressSuccessState(data: user));
       } else {
         emit(AddressInitialState());
       }

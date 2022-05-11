@@ -12,6 +12,8 @@ class PriceList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        '=============================================================================================================================$prodNum ');
     return Container(
       child: Column(
         children: [
@@ -23,10 +25,10 @@ class PriceList extends StatelessWidget {
             t1: 'Delivery Charge',
             t2: 'Rs ${prodNum['shipPrice']}',
           ),
-          datas(
-              t1: 'Total Discount',
-              t2: '- Rs ${5}',
-              style: TextStyle(color: offgreenColor, fontSize: 15)),
+          // datas(
+          //     t1: 'Total Discount',
+          //     t2: '- Rs ${prodNum['salesPrice'] - prodNum['discountPrice'] ?? 5}',
+          //     style: TextStyle(color: offgreenColor, fontSize: 15)),
           datas(
             t1: 'Tax Charge',
             t2: 'Rs 00.00',
@@ -125,13 +127,12 @@ class BasicProdDetail extends StatelessWidget {
         Row(
           children: [
             Container(
-              child:
-                  Txt(
-                      t: 'MRP : Rs${prodNum['salesPrice']} ',
-                      decoration: TextDecoration.lineThrough,
-                      fontSize: 13,
-                      color: greyColor,
-                    ),
+              child: Txt(
+                t: 'MRP : Rs${prodNum['salesPrice']} ',
+                decoration: TextDecoration.lineThrough,
+                fontSize: 13,
+                color: greyColor,
+              ),
             ),
 
             // widthSizedBox(2.0),

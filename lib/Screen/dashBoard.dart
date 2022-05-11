@@ -15,6 +15,7 @@ import '../sellerPart/selTransScr.dart';
 
 import '../utils/style.dart';
 import 'home.dart';
+import 'orderScr.dart';
 
 class UserNavigationBar extends StatefulWidget {
   final int? sellerId;
@@ -55,7 +56,7 @@ class _UserNavigationBarState extends State<UserNavigationBar> {
               );
           break;
         case 3:
-          widget.currentPage = WishListScreen();
+          widget.currentPage = OrderScr2();
 
           break;
         case 4:
@@ -66,7 +67,7 @@ class _UserNavigationBarState extends State<UserNavigationBar> {
         //   widget.currentPage = AuthOptionScr(
         //     seller: true,
         //   );
-          // break;
+        // break;
       }
     });
   }
@@ -125,12 +126,17 @@ class _UserNavigationBarState extends State<UserNavigationBar> {
             label: 'Cart',
           ),
           BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/icons/bottom-4.png',
-              height: 22,
+            icon: Icon(
+              Icons.shopping_bag,
               color: widget.currentTab == 3 ? offgreenColor : Colors.black38,
+              size: 24,
             ),
-            label: 'Like',
+            //  Image.asset(
+            //   'assets/icons/bottom-4.png',
+            //   height: 22,
+            //   color: widget.currentTab == 3 ? offgreenColor : Colors.black38,
+            // ),
+            label: 'Order',
           ),
           BottomNavigationBarItem(
             icon: Icon(

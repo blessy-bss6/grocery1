@@ -44,16 +44,18 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       var user = await prodResp.cartAddResp(
         product: event.prodNumber,
       );
-      // print('user data $user');
+      //  dynamic user = await prodResp.cartResp();
+
       if (user['success'] == 1) {
-        emit(CartSuccessState());
+        emit(CartSuccessState(data: user));
         // }
         //else {
-        snackBar(event.context, user['msg'] ?? '');
+        // snackBar(event.context, user['msg'] ?? '');
         // emit(CartInitialState());
+      } else {
+        snackBar(event.context, user['msg'] ?? '');
+        emit(CartInitialState());
       }
-      snackBar(event.context, user['msg'] ?? '');
-      emit(CartInitialState());
     } catch (e) {
       emit(CartFailedState());
     }
@@ -158,6 +160,11 @@ class CartLoadingState extends CartState {}
 class CartSuccessState extends CartState {
   final dynamic data;
   CartSuccessState({this.data});
+}
+
+class CartDelSuccessState extends CartState {
+  final dynamic data;
+  CartDelSuccessState({this.data});
 }
 
 class CartFailedState extends CartState {

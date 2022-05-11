@@ -1,15 +1,6 @@
-import 'dart:convert';
-
-import 'package:groce1/utils/common.dart';
-
 import '../Backend/Resp/reg_login_resp.dart';
 import '../main.dart';
-import '../utils/shared_preferences.dart';
-
-import '../Backend/Model/user.dart';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 // 1 Get Request Again
 Future getDioRequest(String url,
@@ -24,9 +15,11 @@ Future getDioRequest(String url,
   // print(header);
   try {
     Response response = await Dio().get(url, options: Options(headers: header));
-
-    return response.data;
-    
+    // print(response.statusCode);
+    // print(response.data);
+    if (response.statusCode == 200) {
+      return response.data;
+    }
 
     // return response;
   } on DioError catch (e) {

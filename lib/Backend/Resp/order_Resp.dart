@@ -21,10 +21,10 @@ class OrderRespo {
   dynamic orderData
   }) async {
 
-    print(orderData);
+    // print(orderData);
     final response = await postDioRequest(URLConstants.orderUrl, data: orderData);
     
-    print(response);
+    // print(response);
 
     if (response != null) {
       return response;

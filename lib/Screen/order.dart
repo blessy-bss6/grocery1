@@ -383,14 +383,16 @@ class _OrderScreenState extends State<OrderScreen> {
                         onTap: () {
                           print(priceBtn['priceData'][0]['totalAmmount']
                               .runtimeType);
-                                   print(priceBtn['priceData'][0]['totalAmmount']
-                              *100);
+                          print(priceBtn['priceData'][0]['totalAmmount'] * 100);
                           PaymentMethod payMet = PaymentMethod();
                           payMet.initPaymentGateway(context,
-                              addressId: widget.addressId['id']);
+                              addressId: widget.addressId ,totalAmmount:  priceBtn['priceData'][0]
+                                      ['totalAmmount'] *
+                                  100 );
                           payMet.getPayment(context,
                               ammount: priceBtn['priceData'][0]
-                                  ['totalAmmount'] *100);
+                                      ['totalAmmount'] *
+                                  100);
                         }
                         // if (widget.addressId != null &&
                         //     widget.addressId.isNotEmpty) {

@@ -27,7 +27,7 @@ Future<dynamic> logOutDialog(context) {
             child: Text('Yes', style: TextStyle(color: Colors.red)),
             onPressed: () {
               logout().then((value) =>
-                  navigationPushReplacement(context,WelcomeScreen()));
+                  navigationPushReplacement(context, widget: WelcomeScreen()));
             },
           )
         ],
